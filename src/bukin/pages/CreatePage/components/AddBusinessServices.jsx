@@ -1,40 +1,7 @@
-import { NavLink } from 'react-router-dom';
-
 
 export const AddBusinessServices = ({ onInputChangeServices, onAddServices }) => {
 
-
-    //ver si se puede refactorizar a un único metodo ONINPUTCHANGE y pasar el metodo a "createBusinessPage"
-    //Ver como hacer para que aparezca un nuevo formulario cuando se pulsa "añadir otro"
-
-    /*let serviceDescription = "";
-    let serviceDuration = "";
-    let servicePrice = "";
-
-    const onInputChange = ({ target: { name, value } }) => {
-        switch (name) {
-            case "serviceDescription":
-                serviceDescription = value;
-                break;
-            case "serviceDuration":
-                serviceDuration = value;
-                break;
-            case "servicePrice":
-                servicePrice = value;
-                break;
-        }
-    };
-
-      const onAddServices = () => {
-        const newService = {
-            description: serviceDescription,
-            duration: serviceDuration,
-            price: servicePrice
-        }
-        servicesList.push(newService)
-    }*/
-
-
+    //TODO - Ver como hacer para que aparezca un nuevo formulario cuando se hace click en "Añadir otro servicio"
 
     return (
         <>
@@ -76,12 +43,6 @@ export const AddBusinessServices = ({ onInputChangeServices, onAddServices }) =>
 
             <br />
             <button className="btn btn-primary" onClick={event => onAddServices(event)}>+ Añadir otro servicio</button>
-            <br /><br />
-            {/*<NavLink className="btn btn-primary" to="/home">Finalizar</NavLink>*/}
-
-
-            <br /><br /><br /><br />
-            <small>(Cada vez que se clicke "+" debería aparecer un nuevo formulario)</small>
         </>
     )
 }
@@ -90,7 +51,7 @@ export const AddBusinessServices = ({ onInputChangeServices, onAddServices }) =>
 
 
 
-//JAVI - POST del objeto
+//NOTE - POST del objeto
 /*
 fetch("http://127.0.0.1:5173/services", {
     method: "POST",
@@ -110,7 +71,7 @@ fetch("http://127.0.0.1:5173/services", {
 */
 
 /*
-Una forma más eficiente para sustituir el Switch:
+//NOTE - Una forma más eficiente para sustituir el Switch:
     const onInputChange2 = ({ target: { name, value } }) => {
         const serviceList = {
             serviceDescription: () => serviceDescription = value,

@@ -10,11 +10,11 @@ export const CreateBusinessPage = () => {
   //OBJETO BUSINESS
   const [business, setBusiness] = useState({
     type: "",
+    /* //JAVI - Quiero meter esta info dentro de un objeto, pero no consigo hacer la asignacion de
+     los valores en el metodo "handleOnInputChange" (basicInfo: {...prepState, etc)*/
     name: "",
     address: "",
     phoneNumber: "",
-    //JAVI - Quiero meter esta info dentro de un objeto, pero no consigo hacer la asignacion de
-    //los valores en el metodo "handleOnInputChange" (basicInfo: {...prepState, etc)
     /*basicInfo: {
       name: "",
       address: "",
@@ -24,17 +24,9 @@ export const CreateBusinessPage = () => {
   })
 
 
-
-
-  //Metodo de AddBusinessType -----------------------------------------------------------------------
+  //AddBusinessType (1) -----------------------------------------------------------------------
   const handleOnSelectBusinessType = (event) => {
     const businessType = event.target.innerText;
-    //Una forma de hacerlo:
-    /*setBusiness({
-      ...business,
-      type: businessType
-    })*/
-    //Una forma mejor:
     setBusiness((prepState) => {
       return {
         ...prepState,
@@ -42,11 +34,16 @@ export const CreateBusinessPage = () => {
       }
     }
     )
+    //Otra forma de hacerlo:
+    /*setBusiness({
+      ...business,
+      type: businessType
+    })*/
   };
-  //Metodo de AddBusinessType -----------------------------------------------------------------------
+  //AddBusinessType -----------------------------------------------------------------------
 
 
-  //Metodo de AddBusinessInformation -----------------------------------------------------------------------
+  //AddBusinessInformation (2) -----------------------------------------------------------------------
   const handleOnInputChange = (event) => {
     if (event.target.name === "businessName") {
       setBusiness({
@@ -73,10 +70,10 @@ export const CreateBusinessPage = () => {
       )
     }
   }
-  //Metodo de AddBusinessInformation -----------------------------------------------------------------------
+  //AddBusinessInformation -----------------------------------------------------------------------
 
 
-  //Metodo de AddBusinessServices -----------------------------------------------------------------------
+  //AddBusinessServices (3) -----------------------------------------------------------------------
   let serviceDescription = "";
   let serviceDuration = "";
   let servicePrice = "";
@@ -96,7 +93,7 @@ export const CreateBusinessPage = () => {
   };
 
   let servicesList = [];
-  console.log(servicesList)
+
   const handleOnAddServices = () => {
     const newService = {
       description: serviceDescription,
@@ -105,6 +102,7 @@ export const CreateBusinessPage = () => {
     }
     servicesList.push(newService)
 
+    //JAVI - No consigo actualizar el array "services" (linea 23) sin que se dupliquen los elementos anteriores
     setBusiness((prepState) => {
       return {
         ...prepState,
@@ -112,11 +110,8 @@ export const CreateBusinessPage = () => {
       }
     }
     )
-
-    //console.log(business)
-
   }
-  //Metodo de AddBusinessServices -----------------------------------------------------------------------
+  //AddBusinessServices -----------------------------------------------------------------------
 
 
   //STEPS ---------------------------------------------------------------------------
