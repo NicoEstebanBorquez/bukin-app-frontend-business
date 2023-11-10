@@ -39,47 +39,47 @@ export const CreateBusinessPage = () => {
 
 
   //AddBusinessInformation (2) -----------------------------------------------------------------------
-  const handleOnInputChange = (event) => {
-    if (event.target.name === "businessName") {
-      setBusiness((prevState) => {
-        return {
-          ...prevState,
-          basicInfo: {
-            ...prevState.basicInfo,
-            name: event.target.value
+  const handleOnInputChange = ({target: {name, value}}) => {
+    switch (name) {
+      case "businessName":
+        setBusiness((prevState) => {
+          return {
+            ...prevState,
+            basicInfo: {
+              ...prevState.basicInfo,
+              name: value
+            }
           }
-        }
-      })
-    }
+        });
 
-    if (event.target.name === "businessAddress") {
-      setBusiness((prevState) => {
-        return {
-          ...prevState,
-          basicInfo: {
-            ...prevState.basicInfo,
-            address: event.target.value
+      case "businessAddress":
+        setBusiness((prevState) => {
+          return {
+            ...prevState,
+            basicInfo: {
+              ...prevState.basicInfo,
+              address: value
+            }
           }
-        }
-      })
-    }
+        });
 
-    if (event.target.name === "businessPhoneNumber") {
-      setBusiness((prevState) => {
-        return {
-          ...prevState,
-          basicInfo: {
-            ...prevState.basicInfo,
-            phoneNumber: event.target.value
+      case "businessPhoneNumber":
+        setBusiness((prevState) => {
+          return {
+            ...prevState,
+            basicInfo: {
+              ...prevState.basicInfo,
+              phoneNumber: value
+            }
           }
-        }
-      })
+        });
     }
   }
   //AddBusinessInformation -----------------------------------------------------------------------
 
 
   //AddBusinessServices (3) -----------------------------------------------------------------------
+  //TODO - Refactorizar esto, se puede mejorar:
   let serviceDescription = "";
   let serviceDuration = "";
   let servicePrice = "";

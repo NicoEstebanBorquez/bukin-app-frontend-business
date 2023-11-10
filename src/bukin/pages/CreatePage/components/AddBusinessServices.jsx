@@ -1,7 +1,16 @@
+import { useState } from "react";
 
 export const AddBusinessServices = ({ onInputChangeServices, onAddServices }) => {
 
     //TODO - Ver como hacer para que aparezca un nuevo formulario cuando se hace click en "Añadir otro servicio"
+
+    const [counter, setCounter] = useState(1);
+
+    const servicesCounter = (event) => {
+        setCounter(counter + 1)
+    }
+
+    console.log("counter: ", counter)
 
     return (
         <>
@@ -9,40 +18,49 @@ export const AddBusinessServices = ({ onInputChangeServices, onAddServices }) =>
 
             <div>Añade los servicios que ofrece tu negocio</div>
             <br />
-            <div>
-                <div className="form-group">
-                    <label>Descripción</label>
-                    <input
-                        className="form-control"
-                        type="text"
-                        name="serviceDescription"
-                        onChange={onInputChangeServices}
-                    />
-                </div>
 
-                <div className="form-group">
-                    <label>Duración</label>
-                    <input
-                        className="form-control"
-                        type="text"
-                        name="serviceDuration"
-                        onChange={onInputChangeServices}
-                    />
-                </div>
+        {/* //JAVI - Se podría hacer esto con un bucle For?*/}
+            {
+                [...Array(counter).keys()].map((i) => (
+                    <div key={i}>
+                        <h3>servicio {i+1}</h3>
+                        <div className="form-group">
+                            <label>Descripción</label>
+                            <input
+                                className="form-control"
+                                type="text"
+                                name="serviceDescription"
+                                onChange={onInputChangeServices}
+                            />
+                        </div>
 
-                <div className="form-group">
-                    <label>Precio</label>
-                    <input
-                        className="form-control"
-                        type="text"
-                        name="servicePrice"
-                        onChange={onInputChangeServices}
-                    />
-                </div>
-            </div>
+                        <div className="form-group">
+                            <label>Duración</label>
+                            <input
+                                className="form-control"
+                                type="text"
+                                name="serviceDuration"
+                                onChange={onInputChangeServices}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Precio</label>
+                            <input
+                                className="form-control"
+                                type="text"
+                                name="servicePrice"
+                                onChange={onInputChangeServices}
+                            />
+                        </div>
+                    </div>
+                ))
+            }
 
             <br />
-            <button className="btn btn-primary" onClick={event => onAddServices(event)}>+ Añadir otro servicio</button>
+            {/* //JAVI - Se puede pasar más de 1 método a "onClick"? Hay alguna forma mejor?*/}
+            <button className="btn btn-primary" onClick={event => [onAddServices(event), servicesCounter(event)]}>+ Añadir otro servicio</button>
+            <button className="btn btn-primary m-2">Finalizar</button>
         </>
     )
 }
