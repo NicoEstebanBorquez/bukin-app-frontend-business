@@ -10,16 +10,11 @@ export const CreateBusinessPage = () => {
   //OBJETO BUSINESS
   const [business, setBusiness] = useState({
     type: "",
-    /* //JAVI - Quiero meter esta info dentro de un objeto, pero no consigo hacer la asignacion de
-     los valores en el metodo "handleOnInputChange" (basicInfo: {...prepState, etc)*/
-    name: "",
-    address: "",
-    phoneNumber: "",
-    /*basicInfo: {
+    basicInfo: {
       name: "",
       address: "",
       phoneNumber: ""
-    },*/
+    },
     services: []
   })
 
@@ -27,14 +22,14 @@ export const CreateBusinessPage = () => {
   //AddBusinessType (1) -----------------------------------------------------------------------
   const handleOnSelectBusinessType = (event) => {
     const businessType = event.target.innerText;
-    setBusiness((prepState) => {
+    setBusiness((prevState) => {
       return {
-        ...prepState,
+        ...prevState,
         type: businessType
       }
     }
     )
-    //Otra forma de hacerlo:
+    //NOTE - Otra forma de hacerlo:
     /*setBusiness({
       ...business,
       type: businessType
@@ -46,28 +41,39 @@ export const CreateBusinessPage = () => {
   //AddBusinessInformation (2) -----------------------------------------------------------------------
   const handleOnInputChange = (event) => {
     if (event.target.name === "businessName") {
-      setBusiness({
-        ...business,
-        name: event.target.value
+      setBusiness((prevState) => {
+        return {
+          ...prevState,
+          basicInfo: {
+            ...prevState.basicInfo,
+            name: event.target.value
+          }
+        }
       })
     }
+
     if (event.target.name === "businessAddress") {
-      setBusiness((prepState) => {
+      setBusiness((prevState) => {
         return {
-          ...prepState,
-          address: event.target.value
+          ...prevState,
+          basicInfo: {
+            ...prevState.basicInfo,
+            address: event.target.value
+          }
         }
-      }
-      )
+      })
     }
+
     if (event.target.name === "businessPhoneNumber") {
-      setBusiness((prepState) => {
+      setBusiness((prevState) => {
         return {
-          ...prepState,
-          phoneNumber: event.target.value
+          ...prevState,
+          basicInfo: {
+            ...prevState.basicInfo,
+            phoneNumber: event.target.value
+          }
         }
-      }
-      )
+      })
     }
   }
   //AddBusinessInformation -----------------------------------------------------------------------
@@ -102,11 +108,10 @@ export const CreateBusinessPage = () => {
     }
     servicesList.push(newService)
 
-    //JAVI - No consigo actualizar el array "services" (linea 23) sin que se dupliquen los elementos anteriores
-    setBusiness((prepState) => {
+    setBusiness((prevState) => {
       return {
-        ...prepState,
-        services: [...servicesList, servicesList]
+        ...prevState,
+        services: [...prevState.services, servicesList]
       }
     }
     )
