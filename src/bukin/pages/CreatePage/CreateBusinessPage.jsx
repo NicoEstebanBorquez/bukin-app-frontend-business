@@ -10,7 +10,7 @@ export const CreateBusinessPage = () => {
   //OBJETO BUSINESS
   const [business, setBusiness] = useState({
     type: "",
-    basicInfo: {
+    businessBasicInfo: {
       name: "",
       address: "",
       phoneNumber: ""
@@ -19,6 +19,7 @@ export const CreateBusinessPage = () => {
   })
 
 
+  //JAVI - Ordenar estos métodos en sus respectivos ficheros
   //AddBusinessType (1) -----------------------------------------------------------------------
   const handleOnSelectBusinessType = (event) => {
     const businessType = event.target.innerText;
@@ -39,14 +40,14 @@ export const CreateBusinessPage = () => {
 
 
   //AddBusinessInformation (2) -----------------------------------------------------------------------
-  const handleOnInputChange = ({target: {name, value}}) => {
+  const handleOnInputChange = ({ target: { name, value } }) => {
     switch (name) {
       case "businessName":
         setBusiness((prevState) => {
           return {
             ...prevState,
-            basicInfo: {
-              ...prevState.basicInfo,
+            businessBasicInfo: {
+              ...prevState.businessBasicInfo,
               name: value
             }
           }
@@ -56,8 +57,8 @@ export const CreateBusinessPage = () => {
         setBusiness((prevState) => {
           return {
             ...prevState,
-            basicInfo: {
-              ...prevState.basicInfo,
+            businessBasicInfo: {
+              ...prevState.businessBasicInfo,
               address: value
             }
           }
@@ -67,8 +68,8 @@ export const CreateBusinessPage = () => {
         setBusiness((prevState) => {
           return {
             ...prevState,
-            basicInfo: {
-              ...prevState.basicInfo,
+            businessBasicInfo: {
+              ...prevState.businessBasicInfo,
               phoneNumber: value
             }
           }
@@ -98,7 +99,7 @@ export const CreateBusinessPage = () => {
     }
   };
 
-  let servicesList = [];
+  //let servicesList = [];
 
   const handleOnAddServices = () => {
     const newService = {
@@ -106,15 +107,56 @@ export const CreateBusinessPage = () => {
       duration: serviceDuration,
       price: servicePrice
     }
-    servicesList.push(newService)
-
+    //servicesList.push(newService)
+    //JAVI - Hay un error aquí. Se está creando un array de arrays.
     setBusiness((prevState) => {
       return {
         ...prevState,
-        services: [...prevState.services, servicesList]
+        services: [...prevState.services, newService]
       }
     }
     )
+  }
+
+  const handleSendBusinessObject = () => {
+    /*const fakeBusiness = {
+      type: "peluqueria",
+      businessBasicInfo: {
+        name: "Peluqueria Francisco",
+        address: "Calle La Luz",
+        phoneNumber: "611222333"
+      },
+      services: [
+        {
+          description: "servicio 2",
+          duration: "20",
+          price: "10"
+        },
+        {
+          description: "servicio 1",
+          duration: "30",
+          price: "12"
+        }
+      ]
+    }*/
+
+   
+    console.log(business)
+
+      //JAVI - Sacar esto fuera?
+    fetch("http://localhost:7777/api/businesses", {
+      method: "POST",
+      body: JSON.stringify(business),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        console.log("Respuesta de la API:", response);
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
   }
   //AddBusinessServices -----------------------------------------------------------------------
 
@@ -123,7 +165,7 @@ export const CreateBusinessPage = () => {
   const stepComponents = [
     () => <AddBusinessType onSelectBusinessType={handleOnSelectBusinessType} />,
     () => <AddBusinessInformation onInputChange={handleOnInputChange} businessObject={business} />,
-    () => <AddBusinessServices onInputChangeServices={handleOnInputChangeServices} onAddServices={handleOnAddServices} />
+    () => <AddBusinessServices onInputChangeServices={handleOnInputChangeServices} onAddServices={handleOnAddServices} sendBusinessObject={handleSendBusinessObject} />
   ];
 
   const [currentStep, setCurrentStep] = useState(0);

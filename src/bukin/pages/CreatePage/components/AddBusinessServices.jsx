@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const AddBusinessServices = ({ onInputChangeServices, onAddServices }) => {
+export const AddBusinessServices = ({ onInputChangeServices, onAddServices, sendBusinessObject }) => {
 
     //TODO - Ver como hacer para que aparezca un nuevo formulario cuando se hace click en "Añadir otro servicio"
 
@@ -60,33 +60,12 @@ export const AddBusinessServices = ({ onInputChangeServices, onAddServices }) =>
             <br />
             {/* //JAVI - Se puede pasar más de 1 método a "onClick"? Hay alguna forma mejor?*/}
             <button className="btn btn-primary" onClick={event => [onAddServices(event), servicesCounter(event)]}>+ Añadir otro servicio</button>
-            <button className="btn btn-primary m-2">Finalizar</button>
+            //JAVI - Dar un nombre mejor a "sendBusinessObject"
+            <button className="btn btn-primary m-2" onClick={sendBusinessObject}>Finalizar</button>
         </>
     )
 }
 
-
-
-
-
-//NOTE - POST del objeto
-/*
-fetch("http://127.0.0.1:5173/services", {
-    method: "POST",
-    body: JSON.stringify(newService),
-    headers: {
-    "Content-Type": "application/json",
-    },
-})
-.then((response) => {
-    // Procesar la respuesta de la API
-    console.log("Respuesta de la API:", response);
-})
-.catch((error) => {
-    // Manejar el error
-    console.log("Error:", error);
-});
-*/
 
 /*
 //NOTE - Una forma más eficiente para sustituir el Switch:
