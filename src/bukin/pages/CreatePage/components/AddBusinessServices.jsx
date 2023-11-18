@@ -1,16 +1,19 @@
 import { useState } from "react";
 
-export const AddBusinessServices = ({ onInputChangeServices, onAddServices }) => {
+export const AddBusinessServices = ({ onInputChangeServices, onAddServices, onSendBusinessObject }) => {
 
-    //TODO - Ver como hacer para que aparezca un nuevo formulario cuando se hace click en "Añadir otro servicio"
 
     const [counter, setCounter] = useState(1);
-
     const servicesCounter = (event) => {
         setCounter(counter + 1)
     }
-
     console.log("counter: ", counter)
+
+    const handleOnClickSendButton = () => {
+        onSendBusinessObject();
+        //NOTE - Si hubiera que realizar más acciones a la hora de enviar la petición, se haría aquí.
+    }
+
 
     return (
         <>
@@ -19,11 +22,10 @@ export const AddBusinessServices = ({ onInputChangeServices, onAddServices }) =>
             <div>Añade los servicios que ofrece tu negocio</div>
             <br />
 
-        {/* //JAVI - Se podría hacer esto con un bucle For?*/}
             {
                 [...Array(counter).keys()].map((i) => (
                     <div key={i}>
-                        <h3>servicio {i+1}</h3>
+                        <h3>servicio {i + 1}</h3>
                         <div className="form-group">
                             <label>Descripción</label>
                             <input
@@ -58,35 +60,15 @@ export const AddBusinessServices = ({ onInputChangeServices, onAddServices }) =>
             }
 
             <br />
-            {/* //JAVI - Se puede pasar más de 1 método a "onClick"? Hay alguna forma mejor?*/}
-            <button className="btn btn-primary" onClick={event => [onAddServices(event), servicesCounter(event)]}>+ Añadir otro servicio</button>
-            <button className="btn btn-primary m-2">Finalizar</button>
+            <button className="btn btn-primary" onClick={event => {
+                onAddServices(event);
+                servicesCounter(event);
+            }}>+ Añadir otro servicio</button>
+            <button className="btn btn-primary m-2" onClick={handleOnClickSendButton}>Finalizar</button>
         </>
     )
 }
 
-
-
-
-
-//NOTE - POST del objeto
-/*
-fetch("http://127.0.0.1:5173/services", {
-    method: "POST",
-    body: JSON.stringify(newService),
-    headers: {
-    "Content-Type": "application/json",
-    },
-})
-.then((response) => {
-    // Procesar la respuesta de la API
-    console.log("Respuesta de la API:", response);
-})
-.catch((error) => {
-    // Manejar el error
-    console.log("Error:", error);
-});
-*/
 
 /*
 //NOTE - Una forma más eficiente para sustituir el Switch:

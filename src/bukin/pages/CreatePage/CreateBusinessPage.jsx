@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { AddBusinessType } from './components/AddBusinessType';
 import { AddBusinessInformation } from './components/AddBusinessInformation';
 import { AddBusinessServices } from './components/AddBusinessServices';
+import Business from "../../../api/business/business.service";
 
 
 export const CreateBusinessPage = () => {
@@ -10,7 +11,7 @@ export const CreateBusinessPage = () => {
   //OBJETO BUSINESS
   const [business, setBusiness] = useState({
     type: "",
-    basicInfo: {
+    businessBasicInfo: {
       name: "",
       address: "",
       phoneNumber: ""
@@ -19,6 +20,7 @@ export const CreateBusinessPage = () => {
   })
 
 
+  //JAVI - Ordenar estos métodos en sus respectivos ficheros
   //AddBusinessType (1) -----------------------------------------------------------------------
   const handleOnSelectBusinessType = (event) => {
     const businessType = event.target.innerText;
@@ -39,82 +41,98 @@ export const CreateBusinessPage = () => {
 
 
   //AddBusinessInformation (2) -----------------------------------------------------------------------
-  const handleOnInputChange = ({target: {name, value}}) => {
+  const handleOnInputChange = ({ target: { name, value } }) => {
+
     switch (name) {
       case "businessName":
         setBusiness((prevState) => {
           return {
             ...prevState,
-            basicInfo: {
-              ...prevState.basicInfo,
+            businessBasicInfo: {
+              ...prevState.businessBasicInfo,
               name: value
             }
           }
         });
+        break;
 
       case "businessAddress":
         setBusiness((prevState) => {
           return {
             ...prevState,
-            basicInfo: {
-              ...prevState.basicInfo,
+            businessBasicInfo: {
+              ...prevState.businessBasicInfo,
               address: value
             }
           }
         });
+        break;
 
       case "businessPhoneNumber":
         setBusiness((prevState) => {
           return {
             ...prevState,
-            basicInfo: {
-              ...prevState.basicInfo,
+            businessBasicInfo: {
+              ...prevState.businessBasicInfo,
               phoneNumber: value
             }
           }
         });
+        break;
     }
   }
   //AddBusinessInformation -----------------------------------------------------------------------
 
 
   //AddBusinessServices (3) -----------------------------------------------------------------------
-  //TODO - Refactorizar esto, se puede mejorar:
-  let serviceDescription = "";
-  let serviceDuration = "";
-  let servicePrice = "";
+  const [service, setService] = useState({
+    description: "",
+    duration: "",
+    price: ""
+  })
 
   const handleOnInputChangeServices = ({ target: { name, value } }) => {
     switch (name) {
       case "serviceDescription":
-        serviceDescription = value;
+        setService((prevState) => {
+          return {
+            ...prevState,
+            description: value
+          }
+        })
         break;
       case "serviceDuration":
-        serviceDuration = value;
+        setService((prevState) => {
+          return {
+            ...prevState,
+            duration: value
+          }
+        })
         break;
       case "servicePrice":
-        servicePrice = value;
+        setService((prevState) => {
+          return {
+            ...prevState,
+            price: value
+          }
+        })
         break;
     }
   };
 
-  let servicesList = [];
-
   const handleOnAddServices = () => {
-    const newService = {
-      description: serviceDescription,
-      duration: serviceDuration,
-      price: servicePrice
-    }
-    servicesList.push(newService)
-
     setBusiness((prevState) => {
       return {
         ...prevState,
-        services: [...prevState.services, servicesList]
+        services: [...prevState.services, service]
       }
     }
     )
+  }
+
+  const handleOnSendBusinessObject = () => {
+    console.log(business)
+    Business.saveBusiness(business)
   }
   //AddBusinessServices -----------------------------------------------------------------------
 
@@ -123,7 +141,7 @@ export const CreateBusinessPage = () => {
   const stepComponents = [
     () => <AddBusinessType onSelectBusinessType={handleOnSelectBusinessType} />,
     () => <AddBusinessInformation onInputChange={handleOnInputChange} businessObject={business} />,
-    () => <AddBusinessServices onInputChangeServices={handleOnInputChangeServices} onAddServices={handleOnAddServices} />
+    () => <AddBusinessServices onInputChangeServices={handleOnInputChangeServices} onAddServices={handleOnAddServices} onSendBusinessObject={handleOnSendBusinessObject} />
   ];
 
   const [currentStep, setCurrentStep] = useState(0);
