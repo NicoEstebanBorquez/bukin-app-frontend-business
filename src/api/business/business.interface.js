@@ -1,0 +1,1 @@
+// TODO - Migrar app a TS y crear esta Interface

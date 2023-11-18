@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { AddBusinessType } from './components/AddBusinessType';
 import { AddBusinessInformation } from './components/AddBusinessInformation';
 import { AddBusinessServices } from './components/AddBusinessServices';
+import Business from "../../../api/business/business.service";
 
 
 export const CreateBusinessPage = () => {
@@ -41,6 +42,7 @@ export const CreateBusinessPage = () => {
 
   //AddBusinessInformation (2) -----------------------------------------------------------------------
   const handleOnInputChange = ({ target: { name, value } }) => {
+
     switch (name) {
       case "businessName":
         setBusiness((prevState) => {
@@ -52,6 +54,7 @@ export const CreateBusinessPage = () => {
             }
           }
         });
+        break;
 
       case "businessAddress":
         setBusiness((prevState) => {
@@ -63,6 +66,7 @@ export const CreateBusinessPage = () => {
             }
           }
         });
+        break;
 
       case "businessPhoneNumber":
         setBusiness((prevState) => {
@@ -74,89 +78,61 @@ export const CreateBusinessPage = () => {
             }
           }
         });
+        break;
     }
   }
   //AddBusinessInformation -----------------------------------------------------------------------
 
 
   //AddBusinessServices (3) -----------------------------------------------------------------------
-  //TODO - Refactorizar esto, se puede mejorar:
-  let serviceDescription = "";
-  let serviceDuration = "";
-  let servicePrice = "";
+  const [service, setService] = useState({
+    description: "",
+    duration: "",
+    price: ""
+  })
 
   const handleOnInputChangeServices = ({ target: { name, value } }) => {
     switch (name) {
       case "serviceDescription":
-        serviceDescription = value;
+        setService((prevState) => {
+          return {
+            ...prevState,
+            description: value
+          }
+        })
         break;
       case "serviceDuration":
-        serviceDuration = value;
+        setService((prevState) => {
+          return {
+            ...prevState,
+            duration: value
+          }
+        })
         break;
       case "servicePrice":
-        servicePrice = value;
+        setService((prevState) => {
+          return {
+            ...prevState,
+            price: value
+          }
+        })
         break;
     }
   };
 
-  //let servicesList = [];
-
   const handleOnAddServices = () => {
-    const newService = {
-      description: serviceDescription,
-      duration: serviceDuration,
-      price: servicePrice
-    }
-    //servicesList.push(newService)
-    //JAVI - Hay un error aquí. Se está creando un array de arrays.
     setBusiness((prevState) => {
       return {
         ...prevState,
-        services: [...prevState.services, newService]
+        services: [...prevState.services, service]
       }
     }
     )
   }
 
-  const handleSendBusinessObject = () => {
-    /*const fakeBusiness = {
-      type: "peluqueria",
-      businessBasicInfo: {
-        name: "Peluqueria Francisco",
-        address: "Calle La Luz",
-        phoneNumber: "611222333"
-      },
-      services: [
-        {
-          description: "servicio 2",
-          duration: "20",
-          price: "10"
-        },
-        {
-          description: "servicio 1",
-          duration: "30",
-          price: "12"
-        }
-      ]
-    }*/
-
-   
+  const handleOnSendBusinessObject = () => {
     console.log(business)
-
-      //JAVI - Sacar esto fuera?
-    fetch("http://localhost:7777/api/businesses", {
-      method: "POST",
-      body: JSON.stringify(business),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        console.log("Respuesta de la API:", response);
-      })
-      .catch((error) => {
-        console.log("Error:", error);
-      });
+    Business.saveBusiness(business)
   }
   //AddBusinessServices -----------------------------------------------------------------------
 
@@ -165,7 +141,7 @@ export const CreateBusinessPage = () => {
   const stepComponents = [
     () => <AddBusinessType onSelectBusinessType={handleOnSelectBusinessType} />,
     () => <AddBusinessInformation onInputChange={handleOnInputChange} businessObject={business} />,
-    () => <AddBusinessServices onInputChangeServices={handleOnInputChangeServices} onAddServices={handleOnAddServices} sendBusinessObject={handleSendBusinessObject} />
+    () => <AddBusinessServices onInputChangeServices={handleOnInputChangeServices} onAddServices={handleOnAddServices} onSendBusinessObject={handleOnSendBusinessObject} />
   ];
 
   const [currentStep, setCurrentStep] = useState(0);

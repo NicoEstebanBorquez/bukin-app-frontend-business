@@ -1,16 +1,19 @@
 import { useState } from "react";
 
-export const AddBusinessServices = ({ onInputChangeServices, onAddServices, sendBusinessObject }) => {
+export const AddBusinessServices = ({ onInputChangeServices, onAddServices, onSendBusinessObject }) => {
 
-    //TODO - Ver como hacer para que aparezca un nuevo formulario cuando se hace click en "Añadir otro servicio"
 
     const [counter, setCounter] = useState(1);
-
     const servicesCounter = (event) => {
         setCounter(counter + 1)
     }
-
     console.log("counter: ", counter)
+
+    const handleOnClickSendButton = () => {
+        onSendBusinessObject();
+        //NOTE - Si hubiera que realizar más acciones a la hora de enviar la petición, se haría aquí.
+    }
+
 
     return (
         <>
@@ -19,11 +22,10 @@ export const AddBusinessServices = ({ onInputChangeServices, onAddServices, send
             <div>Añade los servicios que ofrece tu negocio</div>
             <br />
 
-        {/* //JAVI - Se podría hacer esto con un bucle For?*/}
             {
                 [...Array(counter).keys()].map((i) => (
                     <div key={i}>
-                        <h3>servicio {i+1}</h3>
+                        <h3>servicio {i + 1}</h3>
                         <div className="form-group">
                             <label>Descripción</label>
                             <input
@@ -58,10 +60,11 @@ export const AddBusinessServices = ({ onInputChangeServices, onAddServices, send
             }
 
             <br />
-            {/* //JAVI - Se puede pasar más de 1 método a "onClick"? Hay alguna forma mejor?*/}
-            <button className="btn btn-primary" onClick={event => [onAddServices(event), servicesCounter(event)]}>+ Añadir otro servicio</button>
-            //JAVI - Dar un nombre mejor a "sendBusinessObject"
-            <button className="btn btn-primary m-2" onClick={sendBusinessObject}>Finalizar</button>
+            <button className="btn btn-primary" onClick={event => {
+                onAddServices(event);
+                servicesCounter(event);
+            }}>+ Añadir otro servicio</button>
+            <button className="btn btn-primary m-2" onClick={handleOnClickSendButton}>Finalizar</button>
         </>
     )
 }

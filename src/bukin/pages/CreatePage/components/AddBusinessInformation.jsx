@@ -1,6 +1,5 @@
 
 export const AddBusinessInformation = ({ onInputChange, businessObject }) => {
-
     return (
         <>
             <div>AddBusinessInformationPage</div>
@@ -12,8 +11,8 @@ export const AddBusinessInformation = ({ onInputChange, businessObject }) => {
                     className="form-control"
                     type="text"
                     name="businessName"
-                    value={businessObject.name}
-                    onChange={event => onInputChange(event)}
+                    value={businessObject.businessBasicInfo.name}
+                    onChange={onInputChange}
                 />
             </div>
 
@@ -23,8 +22,8 @@ export const AddBusinessInformation = ({ onInputChange, businessObject }) => {
                     className="form-control"
                     type="text"
                     name="businessAddress"
-                    value={businessObject.address}
-                    onChange={event => onInputChange(event)}
+                    value={businessObject.businessBasicInfo.address}
+                    onChange={onInputChange}
                 />
             </div>
 
@@ -34,8 +33,8 @@ export const AddBusinessInformation = ({ onInputChange, businessObject }) => {
                     className="form-control"
                     type="text"
                     name="businessPhoneNumber"
-                    value={businessObject.phoneNumber}
-                    onChange={event => onInputChange(event)}
+                    value={businessObject.businessBasicInfo.phoneNumber}
+                    onChange={onInputChange}
                 />
             </div>
         </>
