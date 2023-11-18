@@ -4,6 +4,7 @@ import { AddBusinessType } from './components/AddBusinessType';
 import { AddBusinessInformation } from './components/AddBusinessInformation';
 import { AddBusinessServices } from './components/AddBusinessServices';
 import Business from "../../../api/business/business.service";
+import { AddBusinessURL } from "./components/AddBusinessURL";
 
 
 export const CreateBusinessPage = () => {
@@ -11,16 +12,18 @@ export const CreateBusinessPage = () => {
   //OBJETO BUSINESS
   const [business, setBusiness] = useState({
     type: "",
-    businessBasicInfo: {
+    basicInfo: {
       name: "",
       address: "",
       phoneNumber: ""
     },
+    url: "",
     services: []
   })
 
+  console.log(business);
 
-  //JAVI - Ordenar estos métodos en sus respectivos ficheros
+  //TODO - Todos estos métodos y lógica (que tienen la finalidad de gestionar el estado de "business") debe ir en un custom hook.
   //AddBusinessType (1) -----------------------------------------------------------------------
   const handleOnSelectBusinessType = (event) => {
     const businessType = event.target.innerText;
@@ -48,8 +51,8 @@ export const CreateBusinessPage = () => {
         setBusiness((prevState) => {
           return {
             ...prevState,
-            businessBasicInfo: {
-              ...prevState.businessBasicInfo,
+            basicInfo: {
+              ...prevState.basicInfo,
               name: value
             }
           }
@@ -60,8 +63,8 @@ export const CreateBusinessPage = () => {
         setBusiness((prevState) => {
           return {
             ...prevState,
-            businessBasicInfo: {
-              ...prevState.businessBasicInfo,
+            basicInfo: {
+              ...prevState.basicInfo,
               address: value
             }
           }
@@ -72,8 +75,8 @@ export const CreateBusinessPage = () => {
         setBusiness((prevState) => {
           return {
             ...prevState,
-            businessBasicInfo: {
-              ...prevState.businessBasicInfo,
+            basicInfo: {
+              ...prevState.basicInfo,
               phoneNumber: value
             }
           }
@@ -83,8 +86,19 @@ export const CreateBusinessPage = () => {
   }
   //AddBusinessInformation -----------------------------------------------------------------------
 
+  //AddBusinessURL (3) -----------------------------------------------------------------------
+  const handleOnInputChangeURL = ({ target: { value } }) => {
+    setBusiness((prevState) => {
+      return {
+        ...prevState,
+        url: value
+      }
+    });
+  }
+  //AddBusinessURL -----------------------------------------------------------------------
 
-  //AddBusinessServices (3) -----------------------------------------------------------------------
+
+  //AddBusinessServices (4) -----------------------------------------------------------------------
   const [service, setService] = useState({
     description: "",
     duration: "",
@@ -141,6 +155,7 @@ export const CreateBusinessPage = () => {
   const stepComponents = [
     () => <AddBusinessType onSelectBusinessType={handleOnSelectBusinessType} />,
     () => <AddBusinessInformation onInputChange={handleOnInputChange} businessObject={business} />,
+    () => <AddBusinessURL onInputChange={handleOnInputChangeURL} businessObject={business} />,
     () => <AddBusinessServices onInputChangeServices={handleOnInputChangeServices} onAddServices={handleOnAddServices} onSendBusinessObject={handleOnSendBusinessObject} />
   ];
 

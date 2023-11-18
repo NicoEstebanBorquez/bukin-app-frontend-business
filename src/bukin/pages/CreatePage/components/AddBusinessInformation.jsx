@@ -1,5 +1,8 @@
 
 export const AddBusinessInformation = ({ onInputChange, businessObject }) => {
+    
+    const { name, address, phoneNumber } = businessObject.basicInfo;
+
     return (
         <>
             <div>AddBusinessInformationPage</div>
@@ -11,7 +14,7 @@ export const AddBusinessInformation = ({ onInputChange, businessObject }) => {
                     className="form-control"
                     type="text"
                     name="businessName"
-                    value={businessObject.businessBasicInfo.name}
+                    value={name}
                     onChange={onInputChange}
                 />
             </div>
@@ -22,7 +25,7 @@ export const AddBusinessInformation = ({ onInputChange, businessObject }) => {
                     className="form-control"
                     type="text"
                     name="businessAddress"
-                    value={businessObject.businessBasicInfo.address}
+                    value={address}
                     onChange={onInputChange}
                 />
             </div>
@@ -33,7 +36,7 @@ export const AddBusinessInformation = ({ onInputChange, businessObject }) => {
                     className="form-control"
                     type="text"
                     name="businessPhoneNumber"
-                    value={businessObject.businessBasicInfo.phoneNumber}
+                    value={phoneNumber}
                     onChange={onInputChange}
                 />
             </div>
