@@ -60,6 +60,7 @@ export const AddBusinessServices = ({ onInputChangeServices, onAddServices, onSe
             }
 
             <br />
+            {/*//TODO - Arreglar. Hay que pulsar este boton para que se añada el ultimo servicios*/}
             <button className="btn btn-primary" onClick={event => {
                 onAddServices(event);
                 servicesCounter(event);

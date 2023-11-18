@@ -1,23 +1,22 @@
 
 class Business {
-    apiBaseUrl = import.meta.env.VITE_BASE_URL;
 
-    static saveBusiness(business) {
+    static apiBaseUrl = import.meta.env.VITE_BASE_URL;
 
-        fetch(`${apiBaseUrl}api/businesses`, {
-
-            method: "POST",
-            body: JSON.stringify(business),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((response) => {
-                console.log("Respuesta de la API:", response);
-            })
-            .catch((error) => {
-                console.log("Error:", error);
+    static async saveBusiness(business) {
+        try {
+            const response = await fetch(`${this.apiBaseUrl}api/businesses`, {
+                method: "POST",
+                body: JSON.stringify(business),
+                headers: {
+                    "Content-Type": "application/json",
+                },
             });
+            console.log("Respuesta de la API:", response);
+
+        } catch (error) {
+            console.log("Error:", error);
+        }
     }
 
     //getBusiness()
