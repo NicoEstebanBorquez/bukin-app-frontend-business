@@ -1,5 +1,5 @@
 
-export const AddBusinessURL = ({ onInputChange, businessObject }) => {
+export const AddBusinessURL = ({ onInputChange, businessObject, URLValidState }) => {
 
     const { url } = businessObject;
 
@@ -17,8 +17,24 @@ export const AddBusinessURL = ({ onInputChange, businessObject }) => {
                     onChange={onInputChange}
                 />
                 <br />
-                <small>Ejemplo: www.bukin.com/peluqueria-francis</small>
+                {
+                    URLValidState ? <></> : <small style={{ color: "red" }}>
+                        Caracter no válido.
+                        <br />
+                        Carácteres permitidos:
+                        <br />
+                        - Letras (excepto la <b>ñ</b>)<br />
+                        - Números<br />
+                        - Guiones ("-")
+                        <br />
+                        <b>Ejemplo "peluqueria-maribel"</b></small>
+                }
+                <br />
             </div>
+            <br />
+
+            <h5>Tu página será:</h5><h1>www.bukin.com/{url}</h1>
+
             <br />
             <br />
         </>

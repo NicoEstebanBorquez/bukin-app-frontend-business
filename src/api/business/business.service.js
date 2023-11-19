@@ -19,6 +19,16 @@ class Business {
         }
     }
 
+    static async getURLs() {
+        try {
+            const response = await fetch(`${this.apiBaseUrl}api/businesses/urls`);
+            const urls = await response.json();
+            return urls;
+        } catch (error) {
+            console.log("Error:", error);
+        }
+    }
+
     //getBusiness()
     //getBusinesses()
     //updateBusiness()
