@@ -21,7 +21,7 @@ export const CreateBusinessPage = () => {
     services: []
   })
 
-  console.log(business);
+  //console.log(business);
 
   //TODO - Todos estos métodos y lógica (que tienen la finalidad de gestionar el estado de "business") debe ir en un custom hook.
   //AddBusinessType (1) -----------------------------------------------------------------------
@@ -87,7 +87,32 @@ export const CreateBusinessPage = () => {
   //AddBusinessInformation -----------------------------------------------------------------------
 
   //AddBusinessURL (3) -----------------------------------------------------------------------
-  const handleOnInputChangeURL = ({ target: { value } }) => {
+  const [URLValid, setURLValid] = useState(true)
+
+  const handleOnInputChangeURL = async ({ target: { value } }) => {
+
+    //Checks if URL sintax is valid
+    for (let i = 0; i < value.length; i++) {
+      const char = value.charAt(i);
+
+      if (!/[a-z0-9-]/.test(char)) {
+        setURLValid(false);
+        return false;
+      }
+    }
+
+    //Checks if URL is available
+    const urls = await Business.getURLs();
+    for (let i = 0; i < urls.length; i++) {
+      const url = urls[i]
+      if (value === url) {
+        alert(`La dirección bukin.com/${value} no está disponible. Elige otra.`)
+        return false;
+      }
+    }
+
+    setURLValid(true)
+
     setBusiness((prevState) => {
       return {
         ...prevState,
@@ -145,7 +170,6 @@ export const CreateBusinessPage = () => {
   }
 
   const handleOnSendBusinessObject = () => {
-    console.log(business)
     Business.saveBusiness(business)
   }
   //AddBusinessServices -----------------------------------------------------------------------
@@ -155,7 +179,7 @@ export const CreateBusinessPage = () => {
   const stepComponents = [
     () => <AddBusinessType onSelectBusinessType={handleOnSelectBusinessType} />,
     () => <AddBusinessInformation onInputChange={handleOnInputChange} businessObject={business} />,
-    () => <AddBusinessURL onInputChange={handleOnInputChangeURL} businessObject={business} />,
+    () => <AddBusinessURL onInputChange={handleOnInputChangeURL} businessObject={business} URLValidState={URLValid} />,
     () => <AddBusinessServices onInputChangeServices={handleOnInputChangeServices} onAddServices={handleOnAddServices} onSendBusinessObject={handleOnSendBusinessObject} />
   ];
 
