@@ -1,23 +1,14 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
-import { Navbar } from "../ui/components/Navbar";
-import { HomePage } from "../bukin/pages/HomePage/HomePage";
-import { CreateBusinessPage } from "../bukin/pages/CreatePage/CreateBusinessPage";
-
+import { LoginPage } from "../auth/pages";
+import { BukinRoutes } from "../bukin/routes/BukinRoutes";
 
 export const AppRouter = () => {
     return (
         <>
-            <Navbar />
-
             <Routes>
-                <Route path="home" element={<HomePage />} />
-                <Route path="crear" element={<CreateBusinessPage />} />
-            
-
-
-                <Route path="/" element={<Navigate to="/home" />} />
-                <Route path="/*" element={<Navigate to="/home" />} />
+                <Route path="login" element={<LoginPage />} />
+                <Route path="/*" element={<BukinRoutes />} />
             </Routes>
         </>
     )
