@@ -7,6 +7,7 @@ export const BukinRoutes = () => {
     return (
         <>
             <Navbar />
+            
             <div className="container">
                 <Routes>
                     <Route path="home" element={<HomePage />} />
